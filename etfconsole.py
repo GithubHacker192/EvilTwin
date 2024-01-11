@@ -116,19 +116,19 @@ class ETFConsole(Cmd):
     def do_restore(self, args):
         entered = args.split()
         if len(entered) != 1:
-            print "[-] Only 1 argument expected after spawn command"
+            print("[-] Only 1 argument expected after spawn command")
 
         self.spawnmanager.restore_spawner(args)
 
     def do_spawn(self, args):
         entered = args.split()
         if len(entered) != 1:
-            print "[-] Only 1 argument expected after spawn command"
+            print("[-] Only 1 argument expected after spawn command")
         try:
             self.spawnmanager.add_spawner(args)
         except KeyError as e:
-            print e
-            print "[-] Spawner for '{}' does not exist.".format(args)
+            print(e)
+            print("[-] Spawner for '{}' does not exist.".format(args))
 
     def spawner_completion(self, text, line):
         entered = line.split()
@@ -150,10 +150,10 @@ class ETFConsole(Cmd):
         is_var = lambda key: (  isinstance(self.current_config_mode[key], str) or
                                 isinstance(self.current_config_mode[key], list))
 
-        print "\n".join([ "{:>20} ={:>20}; ({})".format(key,
+        print("\n".join([ "{:>20} ={:>20}; ({})".format(key,
                             self.current_config_mode[key] if is_var(key) else "(dict)",
                             "var" if is_var(key) else "mode")
-                        for key in self.current_config_mode.keys()])
+                        for key in self.current_config_mode.keys()]))
 
     def do_back(self, args):
         mode = [mode for mode in self.config_mode_string.split("/") if mode != '']
@@ -172,7 +172,7 @@ class ETFConsole(Cmd):
     def do_config(self, args):
         arg = args.split()
         if len(arg) != 1:
-            print "[-] Only 1 arg expected after 'config'"
+            print("[-] Only 1 arg expected after 'config'")
             return
 
         try:
@@ -183,7 +183,7 @@ class ETFConsole(Cmd):
             self.config_mode_string = dict_string
             self.update_prompt()
         except Exception:
-            print "'{key}' does not exist in the configuration file".format(key = config_key)
+            print("'{key}' does not exist in the configuration file".format(key = config_key))
 
     def _look_for_config(self, dict_string, dict_root, dict_key):
         if dict_key in dict_root:
@@ -219,7 +219,7 @@ class ETFConsole(Cmd):
     def do_getconf(self, args):
         var = args.split()
         if len(var) != 1:
-            print "[-] Only 1 arg expected after 'get'"
+            print("[-] Only 1 arg expected after 'get'")
             return
 
         try:
@@ -228,10 +228,10 @@ class ETFConsole(Cmd):
                isinstance(self.current_config_mode[mode], list):
 
                 config, value = mode, self.current_config_mode[mode]
-                print "{config} = {value}".format(  config = config,
-                                                    value = self.current_config_mode[mode])
+                print("{config} = {value}".format(  config = config,
+                                                    value = self.current_config_mode[mode]))
         except KeyError:
-            print "'{key}' does not exist in the configuration file".format(key = mode)
+            print("'{key}' does not exist in the configuration file".format(key = mode))
 
     def complete_getconf(self, text, line, begidx, endidx):
         return self.complete_vars(text)
@@ -252,10 +252,10 @@ class ETFConsole(Cmd):
 
             self.configmanager.set_global_config(var, value)
             self.configmanager.write()
-            print "{config} = {value}".format(  config = var,
-                                                value = self.current_config_mode[var])
+            print("{config} = {value}".format(  config = var,
+                                                value = self.current_config_mode[var]))
         except KeyError:
-            print "'{key}' does not exist in the configuration file".format(key = var)
+            print("'{key}' does not exist in the configuration file".format(key = var))
         except Exception as e:
             raise e
             pass
@@ -284,8 +284,8 @@ class ETFConsole(Cmd):
             try:
                 id = int(args[-1])  # line should be something like "copy ap 4"
             except ValueError:
-                print "[-] ID must be an integer value"
-                print "Copy syntax: copy [option] [ID]"
+                print("[-] ID must be an integer value")
+                print("Copy syntax: copy [option] [ID]")
                 return
             if args[0] == "ap":
                 self.aircommunicator.airhost_copy_ap(id)
@@ -348,7 +348,7 @@ class ETFConsole(Cmd):
             try:
                 out = self.addel_options[entered[1]]
             except:
-                print "[-] No option to add or del called '{}' !".format(entered[1])
+                print("[-] No option to add or del called '{}' !".format(entered[1]))
 
         return out
 
@@ -362,7 +362,7 @@ class ETFConsole(Cmd):
             try:
                 out = [keyword for keyword in self.addel_options[entered[1]] if keyword.startswith(start)]
             except:
-                print "[-] No option to add or del called '{}' !".format(entered[1])
+                print("[-] No option to add or del called '{}' !".format(entered[1]))
 
         return out
 
@@ -419,7 +419,7 @@ class ETFConsole(Cmd):
             try:
                 out = self.display_options_vars[entered[1]]
             except:
-                print "[-] No display option called '{}' !".format(entered[1])
+                print("[-] No display option called '{}' !".format(entered[1]))
 
         return out
 
@@ -434,7 +434,7 @@ class ETFConsole(Cmd):
                 try:
                     out = [keyword for keyword in self.display_options_vars[entered[1]] if keyword.startswith(start)]
                 except:
-                    print "[-] No display option called '{}' !".format(entered[1])
+                    print("[-] No display option called '{}' !".format(entered[1]))
 
         return out
 
@@ -472,7 +472,7 @@ class ETFConsole(Cmd):
                     mitm_plugins.append(plugin)
 
         except Exception as e:
-            print "[-] Something is wrong with the configuration of mitmproxy:\n", e
+            print("[-] Something is wrong with the configuration of mitmproxy:\n", e)
             return
 
         self.etfitm.pass_config(listen_host, listen_port, ssl, client_cert, certs, mitm_plugins)
@@ -513,7 +513,7 @@ class ETFConsole(Cmd):
             try:
                 out = self.plugin_options[entered[1]]
             except:
-                print "[-] No plugin options for '{}'".format(entered[1])
+                print("[-] No plugin options for '{}'".format(entered[1]))
 
         return out
 
@@ -540,7 +540,7 @@ class ETFConsole(Cmd):
                 try:
                     out = [keyword for keyword in self.plugin_options[entered[1]] if keyword.startswith(start)]
                 except:
-                    print "[-] No plugin options for '{}'".format(entered[1])
+                    print("[-] No plugin options for '{}'".format(entered[1]))
 
         return out
 
@@ -549,7 +549,7 @@ class ETFConsole(Cmd):
         try:
             id, is_handshake, is_half, is_latte = int(args[1]), "handshake"in args[0], "half" in args[0], "latte" in args[0]
         except:
-            print "[-] ID must be int"
+            print("[-] ID must be int")
             return
         if is_handshake:
             self.aircommunicator.crack_handshake(id, is_half)
@@ -574,7 +574,7 @@ class ETFConsole(Cmd):
     def do_new_session(self, args):
         args = args.split()
         if len(args) == 0:
-            print "[-] You have to specify a name for a the new session."
+            print("[-] You have to specify a name for a the new session.")
             return
 
         name = "_".join(args)
@@ -585,22 +585,22 @@ class ETFConsole(Cmd):
         args = args.split()
         if SessionManager().get_current_session_name() != "":
             SessionManager().save_session()
-            print "[+] Saved current session '{}' under '{}'!".format(SessionManager().get_current_session_name(),
-                                                                      SessionManager().get_current_session_path())
+            print("[+] Saved current session '{}' under '{}'!".format(SessionManager().get_current_session_name(),
+                                                                      SessionManager().get_current_session_path()))
         else:
             if len(args) >= 1:
                 SessionManager().save_session(args[0])
-                print "[+] Saved current session '{}' under '{}'!".format(SessionManager().get_current_session_name(),
-                                                                          SessionManager().get_current_session_path())
+                print("[+] Saved current session '{}' under '{}'!".format(SessionManager().get_current_session_name(),
+                                                                          SessionManager().get_current_session_path()))
             else:
-                print "Cannot save nameless session. Please add a name after the command."
+                print("Cannot save nameless session. Please add a name after the command.")
 
     def do_load_session(self, args):
         args = args.split()
         try:
             index = int(args[0])
         except:
-            print "[-] Index must be Integer."
+            print("[-] Index must be Integer.")
             return
 
         SessionManager().load_session(index)
@@ -611,14 +611,14 @@ class ETFConsole(Cmd):
                                                                     mode_end = colored("]", "cyan"))
 
     def do_eof(self, line):  # control-D
-        print "[+] Stopping all air communications"
+        print("[+] Stopping all air communications")
         self.aircommunicator.stop_air_communications(True, True, True)
         self.aircommunicator.network_manager.cleanup()
         self.etfitm.stop()
         self.spawnmanager.restore_all()
-        print "Closing Session..."
+        print("Closing Session...")
         SessionManager().close_session()
-        print "Exiting..."
+        print("Exiting...")
         os._exit(0)
 
     # Just overwriting this method so it doesn't execute the last non-empty line
@@ -631,10 +631,10 @@ class ETFConsole(Cmd):
             SessionManager().log_command(complete_line)
 
 if __name__ == '__main__':
-    print etfbanners.get_banner()
+    print(etfbanners.get_banner())
 
     if os.geteuid() != 0:
-        print "[-] You can't handle this yet."
+        print("[-] You can't handle this yet.")
         sys.exit(1)
 
     # Load or Start new Session
@@ -648,7 +648,7 @@ if __name__ == '__main__':
     try:
         console.cmdloop()
     except Exception as e:
-        print "[-] Exception in command line loop:\n", e
+        print("[-] Exception in command line loop:\n", e)
         traceback.print_exc()
         console.do_eof("")
         os._exit(1)
