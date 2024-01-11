@@ -54,7 +54,7 @@ class AirScanner(object):
             if card.get_mode().lower() != 'monitor':
                 card.set_mode('monitor')
         except:
-            print "[-] Could not set card to monitor mode. Card might be busy."
+            print ("[-] Could not set card to monitor mode. Card might be busy.")
             SessionManager().log_event(UnsuccessfulEvent("AirScanner start was aborted, unable to set card to monitor mode."))
             return
 
@@ -93,18 +93,18 @@ class AirScanner(object):
 
     def sniff_packets(self):
         SessionManager().log_event(SuccessfulEvent("AirScanner module started successfully."))
-        print "[+] Starting packet sniffer on interface '{}'".format(self.running_interface)
+        print ("[+] Starting packet sniffer on interface '{}'".format(self.running_interface))
 
         try:
             conf.use_pcap = True  # Accelerate sniffing -> Less packet loss
             sniff(iface=self.running_interface, store=0, prn=self.handle_packets, stop_filter= (lambda pkt: not self.sniffer_running))
         except Exception as e:
             print str(e)
-            print "[-] Exception occurred while sniffing on interface '{}'".format(self.running_interface)
+            print ("[-] Exception occurred while sniffing on interface '{}'".format(self.running_interface))
             SessionManager().log_event(UnsuccessfulEvent("AirScanner crashed during execution: {}.".format(str(e))))
 
         SessionManager().log_event(NeutralEvent("AirScanner module stopped."))
-        print "[+] Packet sniffer on interface '{}' has finished".format(self.running_interface)
+        print ("[+] Packet sniffer on interface '{}' has finished".format(self.running_interface))
         self._clean_quit(wait = False)
 
     def hop_channels(self):
@@ -230,7 +230,7 @@ class AirScanner(object):
 
                 SessionManager().update_session_data("sniffed_probes", self.probes)
             except Exception as e:
-                print "Error in airscanner._add_probe"
+                print ("Error in airscanner._add_probe")
                 print e
 
     def _log_client(self, probe):
@@ -266,7 +266,7 @@ class AirScanner(object):
 
                     SessionManager().update_session_data("sniffed_clients", self.clients)
             except Exception as e:
-                print "Error in airscanner._add_client"
+                print ("Error in airscanner._add_client")
                 print e
 
     def get_access_points(self):
@@ -319,3 +319,4 @@ class AirScanner(object):
         for probe in self.get_probe_requests():
             if probe.ap_ssid:
                 probe.ap_bssids = self.get_bssids_from_ssid(probe.ap_ssid)
+

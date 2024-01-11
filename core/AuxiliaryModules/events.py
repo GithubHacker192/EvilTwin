@@ -46,3 +46,4 @@ class NeutralEvent(Event):
 class SuccessfulEvent(Event):
     def __init__(self, message):
         super(SuccessfulEvent, self).__init__(EventType.Successful, message)
+

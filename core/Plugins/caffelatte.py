@@ -33,8 +33,8 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
             self.channel = int(self.config["fixed_sniffing_channel"])
             self.notification_divisor = int(self.config["notification_divisor"])
         except:
-            print "[-] 'sniffing_channel' and 'notification_divisor' must be Integer."
-            print "[-] Setting to default values: channel = 11, notification_divisor = 2000"
+            print ("[-] 'sniffing_channel' and 'notification_divisor' must be Integer.")
+            print ("[-] Setting to default values: channel = 11, notification_divisor = 2000")
             self.channel = 11
             self.notification_divisor = 2000
 
@@ -91,7 +91,7 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
     def replay_attack(self):
         socket = conf.L2socket(iface = self.sniffing_interface)
 
-        print "[+] Starting replay attack"
+        print ("[+] Starting replay attack")
         while self.replay_attack_running:
             # Always send fresh new packets
             try:
@@ -102,7 +102,7 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
                 # No buffer space available.. wait and keep sending
                 sleep(.25)
 
-        print "[+] Stopped replay attack from last ARP packet"
+        print ("[+] Stopped replay attack from last ARP packet")
         socket.close()
         SessionManager().log_event(NeutralEvent("Stopped Caffe-Latte attack. Logged {} WEP Data packets."
                                                 .format(self.tcpdump_logger.get_wep_data_count())))
@@ -142,8 +142,8 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
                     self.target_client_mac = client_mac
 
                 if self.target_client_mac == client_mac and len(self.original_arp_packets) < 5:
-                    print "[+] Found a new ARP packet"
-                    print "[+] Flipping and adding to the flipped packets ring."
+                    print ("[+] Found a new ARP packet")
+                    print ("[+] Flipping and adding to the flipped packets ring.")
                     self.original_arp_packets.append(packet)
                     self.flip_original_arp_packets()
                     SessionManager().log_event(SuccessfulEvent(
@@ -167,7 +167,7 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
                         if self.n_captured_data_packets % self.notification_divisor == 0 and \
                            self.n_captured_data_packets > 0:
                             self.n_captured_data_packets = self.tcpdump_logger.get_wep_data_count()
-                            print "[+] tcpdump captured {} wep data packets so far...".format(self.n_captured_data_packets)
+                            print ("[+] tcpdump captured {} wep data packets so far...".format(self.n_captured_data_packets))
 
     def post_scanning(self):
         self.replay_attack_running = False
@@ -179,3 +179,4 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
 
         if self.replay_attack_thread is not None:
             self.replay_attack_thread.join()
+

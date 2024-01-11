@@ -166,3 +166,4 @@ class AuthenticationResponse(AccessPointPacket):
 class AssociationResponse(AccessPointPacket):
     def __init__(self, packet):
         super(AssociationResponse, self).__init__(packet)
+

@@ -103,3 +103,4 @@ class ProbeInfo(object):
 
     def __str__(self):
         return "{}-{}-{}".format(self.client_mac, self.ap_ssid, self.type)
+

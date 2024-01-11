@@ -64,7 +64,7 @@ class ARPReplayer(AirScannerPlugin):
                     self.injection_working = True
                     self.replay_thread = Thread( target = self.arp_replay )
                     self.replay_thread.start()
-                    print "[+] Found a ARP request packet, trying replay attack."
+                    print ("[+] Found a ARP request packet, trying replay attack.")
                     self.tcpdump_logger.start_logging()
                     SessionManager().log_event(SuccessfulEvent(
                                               "Identified ARP request from client '{}'."
@@ -78,7 +78,7 @@ class ARPReplayer(AirScannerPlugin):
                 if self.n_captured_data_packets % self.notification_divisor == 0 and \
                    self.n_captured_data_packets > 0 and self.tcpdump_logger.is_logging():
                     self.n_captured_data_packets = self.tcpdump_logger.get_wep_data_count()
-                    print "[+] tcpdump captured {} wep data packets so far...".format(self.n_captured_data_packets)
+                    print ("[+] tcpdump captured {} wep data packets so far...".format(self.n_captured_data_packets))
 
             # Evaluate if injection is working
             if self.injection_working:
@@ -87,7 +87,7 @@ class ARPReplayer(AirScannerPlugin):
 
                     self.injection_working = False
                     self.n_arp_packets_sent = 0
-                    print "[-] ARP replay was not working. Looking for new ARP packet."
+                    print ("[-] ARP replay was not working. Looking for new ARP packet.")
                     SessionManager().log_event(UnsuccessfulEvent(
                                               "ARP replay attack not working for packet from client '{}'."
                                               .format(self.arp_packet[Dot11].addr2)))
@@ -95,7 +95,7 @@ class ARPReplayer(AirScannerPlugin):
 
     def arp_replay(self):
         if self.arp_packet is None:
-            print "[-] No ARP packet to try replay attack."
+            print ("[-] No ARP packet to try replay attack.")
             return
 
         s = conf.L2socket(iface = self.sniffing_interface)
@@ -106,7 +106,7 @@ class ARPReplayer(AirScannerPlugin):
                 self.n_arp_packets_sent += 1
             except: pass  # No buffer space available.. skip and keep sending
 
-        print "[+] Stopped replay attack from last ARP packet."
+        print ("[+] Stopped replay attack from last ARP packet.")
         self.injection_running = False
         self.arp_packet = None
         self.n_arp_packets_sent = 0
@@ -117,3 +117,4 @@ class ARPReplayer(AirScannerPlugin):
         if self.replay_thread:
             self.replay_thread.join()
         self.tcpdump_logger.stop_logging()
+

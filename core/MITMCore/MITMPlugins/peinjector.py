@@ -31,12 +31,12 @@ class PeInjector(MITMPlugin):
                                     )
 
     def setup(self):
-        print "[+] Starting peinjector service"
+        print ("[+] Starting peinjector service")
         os.system('service peinjector start')
         os.system('peinjector_start.sh')
 
     def cleanup(self):
-        print "[+] Shutting down peinjector service"
+        print ("[+] Shutting down peinjector service")
         os.system('service peinjector stop')
         os.system('peinjector_stop.sh')
 
@@ -102,6 +102,7 @@ def build_pe_modifier(flow, patch_address, config):
             yield content
 
         if patcher is not None:
-            print "[peinjector] Patched '{}' with malicious payload".format(flow.request.url.split("/")[-1])
+            print ("[peinjector] Patched '{}' with malicious payload".format(flow.request.url.split("/")[-1]))
 
     return modify
+

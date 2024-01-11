@@ -26,3 +26,4 @@ class ConfigurationManager(object):
 
     def write(self):
         self.config.write()
+

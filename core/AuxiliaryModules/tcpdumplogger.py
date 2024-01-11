@@ -25,7 +25,7 @@ class TCPDumpLogger(object):
         tcpdump_string += [ self.filter ] if self.filter is not None else ""
         tcpdump_string += "-w {log}".format(log = self.log_path).split()
 
-        print " ".join(tcpdump_string)
+        print (" ".join(tcpdump_string))
         self.tcpdump_process = Popen(tcpdump_string, stdout = DEVNULL, stderr = DEVNULL)
         with self.log_lock:
             self._is_logging = True
@@ -34,7 +34,7 @@ class TCPDumpLogger(object):
         with self.log_lock:
             self.is_logging = False
             if self.tcpdump_process is not None:
-                print "[+] Killing tcpdump background process"
+                print ("[+] Killing tcpdump background process")
                 self.tcpdump_process.send_signal(9)  # Send SIGINT to process running tcpdum
                 self.tcpdump_process = None
 
@@ -43,7 +43,7 @@ class TCPDumpLogger(object):
         try:
             wep_packets = rdpcap(self.log_path)
         except Exception as e:
-            print "[-] Error reading pcap file:", str(e)
+            print ("[-] Error reading pcap file:", str(e))
             return
         n_data_packets = 0
         for p in wep_packets:
@@ -52,3 +52,4 @@ class TCPDumpLogger(object):
                     n_data_packets += 1
 
         return n_data_packets
+

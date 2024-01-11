@@ -122,7 +122,7 @@ class AirCracker(object):
 
     def launch_handshake_cracker(self, id, is_half, wpa_cracker = None):
         if not self.wpa_cracker and not wpa_cracker:
-            print "[-] WPA Cracker not yet set."
+            print ("[-] WPA Cracker not yet set.")
             return
 
         if wpa_cracker:
@@ -131,14 +131,14 @@ class AirCracker(object):
         try:
             id = int(id)
         except:
-            print "[-] ID must be an integer"
+            print ("[-] ID must be an integer")
             return
 
         self.load_wpa_handshakes()
         self.load_half_wpa_handshakes()
 
         if (is_half and (id > len(self.half_wpa_handshakes) or id < 0)) or (id > len(self.wpa_handshakes)):
-            print "[-] Chosen index is out of bounds"
+            print ("[-] Chosen index is out of bounds")
             return
 
         # Get handshake and prepare cracker
@@ -155,7 +155,7 @@ class AirCracker(object):
         self.load_wep_data_logs(is_latte)
 
         if id < 0 or id > len(self.wep_data_logs) - 1:
-            print "[-] Chosen index is out of bounds"
+            print ("[-] Chosen index is out of bounds")
             return
 
         execution_string = "aircrack-ng '{}'\n".format(self.wep_data_logs[id].location)
@@ -166,8 +166,9 @@ class AirCracker(object):
 
         os.system("chmod +x wep_rcfile.sh")
         if execution_string is not None:
-            print "[+] Called:", execution_string
+            print ("[+] Called:", execution_string)
             call("sudo gnome-terminal -e".split() + [ "./wep_rcfile.sh" ])
             SessionManager().log_event(NeutralEvent("Started cracking session with aircrack-ng on WEP capture with ssid '{}'."
                                                     .format(self.wep_data_logs[id].ssid)))
         os.system("rm wep_rcfile.sh")
+

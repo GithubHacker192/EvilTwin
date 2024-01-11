@@ -52,13 +52,13 @@ class AirCommunicator(object):
         if not self.air_injector.is_running():
             injection_interface = self.configs["airinjector"]["injection_interface"]
             if injection_interface not in winterfaces():
-                print "[-] Injection_interface '{}' does not exist".format(injection_interface)
+                print ("[-] Injection_interface '{}' does not exist".format(injection_interface))
                 return
 
             self.add_plugins(plugins, self.air_injector, AirInjectorPlugin)
             self.air_injector.start_injection_attack(injection_interface)
         else:
-            print "[-] Injection attack still running"
+            print ("[-] Injection attack still running")
 
     def start_access_point(self, plugins = []):
         """This method starts the access point with hostapd while also avoiding conflicts with NetworkManager."""
@@ -74,15 +74,15 @@ class AirCommunicator(object):
             hw_mode = self.configs["airhost"]["aplauncher"]["hw_mode"]
             dns_servers = self.configs["airhost"]["dnsmasqhandler"]["dns_server"]
         except KeyError as e:
-            print "[-] Unable to start Access Point, too few configurations"
+            print ("[-] Unable to start Access Point, too few configurations")
             return False
 
         if  ap_interface not in winterfaces():
-            print "[-] ap_interface '{}' does not exist".format(ap_interface)
+            print ("[-] ap_interface '{}' does not exist".format(ap_interface))
             return False
 
         if internet_interface not in interfaces():
-            print "[-] internet_interface '{}' does not exist".format(internet_interface)
+            print ("[-] internet_interface '{}' does not exist".format(internet_interface))
             return False
 
         necessary_interfaces = [internet_interface, ap_interface]
@@ -90,12 +90,12 @@ class AirCommunicator(object):
         # Check if another service is using our interfaces.
         if self.air_injector.is_running() and \
            self.air_injector.injection_interface in necessary_interfaces:
-            print "[-] AirInjector is using a needed interface."
+            print ("[-] AirInjector is using a needed interface.")
             return False
 
         if self.air_scanner.is_running() and \
            self.air_scanner.running_interface in necessary_interfaces:
-            print "[-] AirScanner using a needed interface."
+            print ("[-] AirScanner using a needed interface.")
             return False
 
         # Add plugins
@@ -181,22 +181,22 @@ class AirCommunicator(object):
                 if fixed_sniffing_channel not in card.get_available_channels():
                     raise
             except:
-                print "Chosen operating channel is not supported by the Wi-Fi card.\n"
+                print ("Chosen operating channel is not supported by the Wi-Fi card.\n")
                 return
 
             sniffing_interface = self.configs["airscanner"]["sniffing_interface"]
             if  sniffing_interface not in winterfaces():
-                print "[-] sniffing_interface '{}' does not exist".format(sniffing_interface)
+                print ("[-] sniffing_interface '{}' does not exist".format(sniffing_interface))
                 return
 
             if not self.network_manager.set_mac_and_unmanage(sniffing_interface, card.get_mac(), retry = True):
-                print "[-] Unable to set mac and unmanage, resetting interface and retrying."
-                print "[-] Sniffer will probably crash."
+                print ("[-] Unable to set mac and unmanage, resetting interface and retrying.")
+                print ("[-] Sniffer will probably crash.")
 
             self.air_scanner.start_sniffer(sniffing_interface)
 
         else:
-            print "[-] Sniffer already running"
+            print ("[-] Sniffer already running")
 
     def add_plugins(self, plugins, airmodule, baseclass):
         """
@@ -206,7 +206,7 @@ class AirCommunicator(object):
             air_plugin_instance = air_plugin(self.plugin_configs)
             if air_plugin_instance.name in plugins:
                 airmodule.add_plugin(air_plugin_instance)
-                print "[+] Successfully added {} plugin to {}.".format( air_plugin_instance.name,
+                print ("[+] Successfully added {} plugin to {}.".format( air_plugin_instance.name,)
                                                                         airmodule.__class__.__name__)
 
     def stop_air_communications(self, stop_sniffer, stop_ap, stop_injection):
@@ -264,13 +264,13 @@ class AirCommunicator(object):
 
             print bssid_info
         else:
-            print "[-] No access point with ID = {}".format(str(id))
+            print ("[-] No access point with ID = {}".format(str(id)))
 
     def airhost_copy_probe(self, id):
         probe = self.air_scanner.get_probe_request(id)
         if probe:
             if not probe.ap_ssid or probe.ap_ssid == "":
-                print "[-] Probe request needs to specify SSID or it cannot be copied."
+                print ("[-] Probe request needs to specify SSID or it cannot be copied.")
                 return
 
             self.configs["airhost"]["aplauncher"]["ssid"] = probe.ap_ssid
@@ -281,7 +281,7 @@ class AirCommunicator(object):
             self.configs["airhost"]["aplauncher"]["encryption"] = "None"
 
         else:
-            print "[-] No probe with ID = {}".format(str(id))
+            print ("[-] No probe with ID = {}".format(str(id)))
 
     def injector_add(self, add_type, filter_string):
         if add_type == "aps":
@@ -303,7 +303,7 @@ class AirCommunicator(object):
                 if client.associated_bssid and client.associated_bssid != "":
                     self.air_injector.add_client(client.client_mac, client.associated_bssid, client.associated_ssid)
             else:
-                print "[-] Cannot add client '{}' because no AP ssid is associated".format(client.client_mac)
+                print ("[-] Cannot add client '{}' because no AP ssid is associated".format(client.client_mac))
 
     def _add_probes(self, filter_string):
         self.air_scanner.update_bssids_in_probes()
@@ -314,7 +314,7 @@ class AirCommunicator(object):
                     if bssid and bssid != "":
                         self.air_injector.add_client(probe.client_mac, bssid, probe.ap_ssid)
             else:
-                print "[-] Cannot add client '{}' because no AP bssid is associated".format(probe.client_mac)
+                print ("[-] Cannot add client '{}' because no AP bssid is associated".format(probe.client_mac))
 
     def injector_del(self, del_type, filter_string):
         if del_type == "aps":
@@ -419,3 +419,4 @@ class AirCommunicator(object):
         wep_log_headers = ["ID:", "SSID:", "CLIENT MAC:", "CLIENT ORG:", "DATE"]
         self.info_printer.add_info(info_key, wep_logs, wep_log_args, wep_log_headers)
         self.info_printer.print_info(info_key, filter_string)
+

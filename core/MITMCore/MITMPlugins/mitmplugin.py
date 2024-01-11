@@ -23,7 +23,7 @@ class MITMPlugin(object):
         try:
             return self.config[key]
         except:
-            print "[-] MITMPlugin Error: Key '{}' does not exist for '{}'".format(key, self.name)
+            print ("[-] MITMPlugin Error: Key '{}' does not exist for '{}'".format(key, self.name))
             return None
 
     def request(self, flow):
@@ -37,3 +37,4 @@ class MITMPlugin(object):
 
     def responseheaders(self, flow):
         pass
+

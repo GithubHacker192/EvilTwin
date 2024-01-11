@@ -74,16 +74,16 @@ class Karma(AirHostPlugin):
         self.dnsmasqhandler.start_dnsmasq()
 
     def print_status(self):
-        print "[+] Starting Karma Sniffer thread and timer for {} seconds".format(self.scan_time)
+        print ("[+] Starting Karma Sniffer thread and timer for {} seconds".format(self.scan_time))
         seconds = 0
         while seconds < int(self.scan_time):
             sleep(5)
             seconds += 5
-            print "[+] Karma Sniffer running for {} seconds".format(seconds)
-            print "[/] Probed ssids so far:"
+            print ("[+] Karma Sniffer running for {} seconds".format(seconds))
+            print ("[/] Probed ssids so far:")
             for ssid, count in self.hit_count.iteritems():
-                print "\t", ssid, count
-        print "[+] Karma Sniffer finished scanning, will now configure hostapd"
+                print ("\t", ssid, count)
+        print ("[+] Karma Sniffer finished scanning, will now configure hostapd")
 
     def sniff_packets(self):
         card = NetworkCard(self.ap_interface)
@@ -93,7 +93,7 @@ class Karma(AirHostPlugin):
             sniff(iface=self.ap_interface, store=0, prn=self.handle_packet, stop_filter= (lambda pkt: self.should_stop))
         except Exception as e:
             print e
-            print "[-] Exception occurred while sniffing on interface '{}'".format(self.ap_interface)
+            print ("[-] Exception occurred while sniffing on interface '{}'".format(self.ap_interface))
         self.should_stop = False
         if card.get_mode() != "managed":
             card.set_mode("managed")
@@ -102,7 +102,7 @@ class Karma(AirHostPlugin):
         try:
             sleep(int(self.scan_time))
         except:
-            print "[-] Karma scan time must be integer. Defaulting to 30 seconds."
+            print ("[-] Karma scan time must be integer. Defaulting to 30 seconds.")
             sleep(30)
 
         self.should_stop = True
@@ -137,9 +137,9 @@ class Karma(AirHostPlugin):
         # Escrever num ficheiro depois ler se for chamado no airhost
         card = NetworkCard(self.ap_interface)
         max_supported_access_points = card.get_number_of_supported_aps()
-        print "Max aps: ", max_supported_access_points
+        print ("Max aps: ", max_supported_access_points)
         if self.max_access_points > max_supported_access_points:
-            print "[-] max_access_points is higher than what card supports. Setting to {}".format(max_supported_access_points)
+            print ("[-] max_access_points is higher than what card supports. Setting to {}".format(max_supported_access_points))
             self.max_access_points = max_supported_access_points
 
         self.aplauncher         = APLauncher(self.hostapd_conf)
@@ -149,9 +149,9 @@ class Karma(AirHostPlugin):
                                                 randint(0, 255))
         final_list = []
         if len(self.lonely_probes) < self.max_access_points:
-            print "[+] Adding all requested ssids to hostapd configuration."
+            print ("[+] Adding all requested ssids to hostapd configuration.")
             for probe in self.lonely_probes:
-                print "[+] Adding '{}' with hit_count '{}' to hostapd configuration".format(probe,
+                print ("[+] Adding '{}' with hit_count '{}' to hostapd configuration".format(probe,)
                                                                                             self.hit_count[probe])
             final_list = list(self.lonely_probes)
             SessionManager().log_event(NeutralEvent("Added all found probes to Karma list."))
@@ -161,7 +161,7 @@ class Karma(AirHostPlugin):
             for i in ordered_popularity:
                 popular_ssid = inverted_popular_ssids[i]
                 final_list.append(popular_ssid)
-                print "[+] Adding '{}' with hit_count '{}' to hostapd configuration".format(popular_ssid,
+                print ("[+] Adding '{}' with hit_count '{}' to hostapd configuration".format(popular_ssid,)
                                                                                             self.hit_count[popular_ssid])
                 SessionManager().log_event(NeutralEvent("Added '{}' to Karma list.".format(popular_ssid)))
                 if len(final_list) == self.max_access_points:
@@ -184,3 +184,4 @@ class Karma(AirHostPlugin):
         self.aplauncher.write_hostapd_configurations(   self.ap_interface,
                                                         final_list,
                                                         rand_mac)
+

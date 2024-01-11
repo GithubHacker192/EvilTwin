@@ -12,7 +12,7 @@ class InfoPrinter(object):
 
     def add_info(self, key, values, args_to_print, headers):
         if len(args_to_print) != len(headers):
-            print "[-] Incompatible header and args_to_print size for '{}'".format(key)
+            print ("[-] Incompatible header and args_to_print size for '{}'".format(key))
             return
 
         self.info_filter.add_info(key, values)
@@ -55,7 +55,7 @@ class InfoFilter(object):
 
     def add_info(self, key, values):  # value must be list
         if type(values) is not list:
-            print "[-] Error cannot add '{}' because values is not a list".format(key)
+            print ("[-] Error cannot add '{}' because values is not a list".format(key))
             return False
 
         self._info[key] = values
@@ -69,7 +69,7 @@ class InfoFilter(object):
         try:
             self._info[key]
         except KeyError:
-            print "[-] No info for '{}'".format(key)
+            print ("[-] No info for '{}'".format(key))
             return []
 
         return self.obj_filter.filter(self._info[key], filter_string)
@@ -169,6 +169,7 @@ class ObjectFilter(object):
             except KeyError:
                 filter_map[key] = [value]
             except Exception:
-                print "[-] Unable to parse arg '{}'".format(arg)
+                print ("[-] Unable to parse arg '{}'".format(arg))
 
         return filter_map
+

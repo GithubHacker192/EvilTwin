@@ -48,7 +48,7 @@ class PacketLogger(AirScannerPlugin):
         try:
             filter = self.filter_types[filter_type](value)
         except KeyError:
-            print "There is no filter definition for '{}'.".format(filter_type)
+            print ("There is no filter definition for '{}'.".format(filter_type))
         except:
             pass
 
@@ -76,3 +76,4 @@ class PacketLogger(AirScannerPlugin):
 
     def handle_packet(self, packet):
         self.log(packet, self.or_filter)
+

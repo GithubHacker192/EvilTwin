@@ -150,3 +150,4 @@ class PePatch(object):
         
         # Return patched memory
         return mem
+

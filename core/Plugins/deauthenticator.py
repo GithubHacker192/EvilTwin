@@ -85,7 +85,8 @@ class Deauthenticator(AirInjectorPlugin):
             if not e.errno == 100:
                 print e
         except Exception as e:
-            print "Exception: {}".format(e)
-            print "[-] Stopped deauthentication attack because of error."
+            print ("Exception: {}".format(e))
+            print ("[-] Stopped deauthentication attack because of error.")
             SessionManager().log_event(UnsuccessfulEvent("Deauthentication attack crashed with error: {}"
                                                         .format(str(e))))
+

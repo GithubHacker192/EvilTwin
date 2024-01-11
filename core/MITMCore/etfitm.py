@@ -25,7 +25,7 @@ class ThreadController(Thread):
         try:
             controller.Master.run(self.main)
         except Exception as e:
-            print "[-] mitmproxy crashed:", e
+            print ("[-] mitmproxy crashed:", e)
             self.main.shutdown()
 
 class EvilInTheMiddleHandler(controller.Master):
@@ -157,11 +157,11 @@ class EvilInTheMiddle(object):
         Starts the mitmproxy and configure iptables rules.
         """
         if not self.running:
-            print "[+] Configuring iptable rules"
+            print ("[+] Configuring iptable rules")
             self._prepare_iptable_rules()
-            print "[+] Preparing master handler"
+            print ("[+] Preparing master handler")
             self._prepare_handler()
-            print "[+] Starting master handler"
+            print ("[+] Starting master handler")
             self.master_handler.run()
             self.running = True
 
@@ -170,10 +170,10 @@ class EvilInTheMiddle(object):
         Stops the mitmproxy and restores the iptables rules.
         """
         if self.running:
-            print "[+] Clearing iptable rules"
+            print ("[+] Clearing iptable rules")
             self._clear_iptable_rules()
             if self.master_handler is not None:
-                print "[+] Shutting down the master handler"
+                print ("[+] Shutting down the master handler")
                 for plugin in self.master_handler.plugins:
                     plugin.cleanup()
 
@@ -198,7 +198,7 @@ class EvilInTheMiddle(object):
             if plugin_instance.name in self.plugins:
                 self.master_handler.plugins.append(plugin_instance)
                 plugin_instance.setup()
-                print "[+] Successfully loaded '{}' plugin.".format(plugin_instance.name)
+                print ("[+] Successfully loaded '{}' plugin.".format(plugin_instance.name))
 
     def _prepare_iptable_rules(self):
         if not self.set_rules:
@@ -215,3 +215,4 @@ class EvilInTheMiddle(object):
                 NetUtils().set_port_redirection_rule("tcp", "443", self.listen_port, add = False)
 
             self.set_rules = False
+

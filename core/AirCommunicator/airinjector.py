@@ -64,14 +64,14 @@ class AirInjector(object):
         # Launches all added plugins' injection attacks and waits for finish
         self.injection_thread_pool_start("inject_packets")
 
-        print "[+] Injection attacks finished executing."
-        print "[+] Starting post injection methods"
+        print ("[+] Injection attacks finished executing.")
+        print ("[+] Starting post injection methods")
 
         # Launches all added plugins' post injection methods and waits for finish
         self.injection_thread_pool_start("post_injection")
         del self.plugins[:]  # Plugin cleanup for next use
 
-        print "[+] Post injection methods finished"
+        print ("[+] Post injection methods finished")
 
         # Restore state after all threads finishing
         injection_socket.close()
@@ -129,3 +129,4 @@ class AirInjector(object):
 
     def is_running(self):
         return self.injection_running
+

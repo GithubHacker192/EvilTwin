@@ -652,3 +652,4 @@ if __name__ == '__main__':
         traceback.print_exc()
         console.do_eof("")
         os._exit(1)
+

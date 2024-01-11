@@ -40,7 +40,7 @@ class Session(object):
 
     def set_session_data(self, key, data):
         if key not in self.session_data.keys():
-            print "[-] Wrong key '{}': will not save this data."
+            print ("[-] Wrong key '{}': will not save this data.")
             return
 
         with self.data_lock:
@@ -80,7 +80,7 @@ class Session(object):
                 continue  # Error decoding just means the file is empty...
             except Exception as e:
                 print e
-                print "[-] Error trying to decode '{}' data from '{}'.".format(key, path)
+                print ("[-] Error trying to decode '{}' data from '{}'.".format(key, path))
 
     def save_session(self, folder_path):
         for key in self.session_data.keys():
@@ -91,4 +91,5 @@ class Session(object):
                     data_file.write(encode(self.session_data[key]))
             except Exception as e:
                 print e
-                print "[-] Error trying to write '{}' data to '{}'.".format(key, path)
+                print ("[-] Error trying to write '{}' data to '{}'.".format(key, path))
+

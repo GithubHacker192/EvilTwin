@@ -49,3 +49,4 @@ def calc_crc32(data):
         dIndex += 1
 
     return crc
+

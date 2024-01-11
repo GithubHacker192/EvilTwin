@@ -101,7 +101,7 @@ class CredentialSniffer(AirScannerPlugin, AirHostPlugin, AirInjectorPlugin):
 
     # This will be called after a deauthentication attack
     def post_injection(self):
-        print "[+] Starting Handshake and Credential sniffing on {} and channel {} for {} seconds".format(
+        print ("[+] Starting Handshake and Credential sniffing on {} and channel {} for {} seconds".format()
                                                                                 self.running_interface,
                                                                                 self.fixed_channel,
                                                                                 self.timeout)
@@ -117,7 +117,7 @@ class CredentialSniffer(AirScannerPlugin, AirHostPlugin, AirInjectorPlugin):
                     prn         =   self.extract_credential_info,
                     stop_filter =   self._stop)
         except Exception as e:
-            print "Error Occurred while sniffing."
+            print ("Error Occurred while sniffing.")
             print str(e)
 
     def restore(self):
@@ -125,7 +125,7 @@ class CredentialSniffer(AirScannerPlugin, AirHostPlugin, AirInjectorPlugin):
 
     def timed_stop(self, time_seconds):
         sleep(time_seconds)
-        print "[+] Stopping credential sniffing"
+        print ("[+] Stopping credential sniffing")
         self.should_stop = True
 
     def _stop(self, packet):
@@ -266,7 +266,7 @@ class CredentialSniffer(AirScannerPlugin, AirHostPlugin, AirInjectorPlugin):
            not self.wpa_handshakes[client_mac]['logged']):
 
             self.wpa_handshakes[client_mac]['ssid'] = self.running_ssid
-            print "[+] Half WPA Handshake found for client '{}' and network '{}'\n".format( client_mac,
+            print ("[+] Half WPA Handshake found for client '{}' and network '{}'\n".format( client_mac,)
                                                                                             self.running_ssid)
             if "wpa_half_handshakes" not in os.listdir(self.log_dir):
                 os.mkdir(self.log_dir + "wpa_half_handshakes")
@@ -287,7 +287,7 @@ class CredentialSniffer(AirScannerPlugin, AirHostPlugin, AirInjectorPlugin):
                 self.wpa_handshakes[client_mac]['ssid'] = self.broadcasted_bssids[bssid][0]
                 self.wpa_handshakes[client_mac]['packets'].append(beacon)
         except Exception as e:
-            print "Exception Logging WPA Handshake: ", traceback.print_exc()
+            print ("Exception Logging WPA Handshake: ", traceback.print_exc())
             return
 
         # Only the last 3 frames are needed
@@ -301,7 +301,7 @@ class CredentialSniffer(AirScannerPlugin, AirHostPlugin, AirInjectorPlugin):
             self.wpa_handshakes[client_mac]['beacon'] and
             not self.wpa_handshakes[client_mac]['logged']):
 
-            print "[+] WPA Handshake found for client '{}' and network '{}'\n".format(client_mac,
+            print ("[+] WPA Handshake found for client '{}' and network '{}'\n".format(client_mac,)
                                                                                       self.wpa_handshakes[client_mac]['ssid'])
             if "wpa_handshakes" not in os.listdir(self.log_dir):
                 os.mkdir(self.log_dir + "wpa_handshakes")
@@ -438,7 +438,7 @@ class ChallengeResponseAuth(object):
                                                                             salt=self.challenge,
                                                                             hash=self.response  )
 
-        print "Hash String:\n" + jtr_hash_string
+        print ("Hash String:\n" + jtr_hash_string)
         n_log = len(os.listdir("data/hashes"))
         out = open("eap_hashes{}.log".format(n_log), "a")
         out.write(jtr_hash_string + "\n")
@@ -451,3 +451,4 @@ class ChallengeResponseAuth(object):
 
     def __ne__(self, other):
         return not self.__eq__(self, other)
+

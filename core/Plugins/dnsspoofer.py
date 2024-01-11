@@ -58,11 +58,11 @@ class DNSSpoofer(AirHostPlugin):
         for page in os.listdir("data/spoofpages/"):
             if page_name in page:
                 self.spoofpages.append(page)
-                print "[+] Added '{page}' to spoof list".format(page = page)
+                print ("[+] Added '{page}' to spoof list".format(page = page))
                 SessionManager().log_event(NeutralEvent("Added '{page}' to spoof list".format(page = page)))
                 return
 
-        print "[-] Page '{}' not found in 'data/spoofpages/' folder."
+        print ("[-] Page '{}' not found in 'data/spoofpages/' folder.")
 
     def _cleanup_misconfigured_pages(self):
         pages = []
@@ -85,18 +85,18 @@ class DNSSpoofer(AirHostPlugin):
                                                                 domain = page,
                                                                 alias = "\t".join(self._create_alias_list(page)))
             conf_string += "{ip} *.*.*\n".format(ip = redirection_ip)
-            print "[+] Mapped '{domain}' to {ip} as captive portal".format(domain = page, ip = redirection_ip)
+            print ("[+] Mapped '{domain}' to {ip} as captive portal".format(domain = page, ip = redirection_ip))
         else:
             for page in self.spoofpages:
                 conf_string += "{ip}\t{domain}\t{alias}\n".format(  ip = redirection_ip,
                                                                     domain = page,
                                                                     alias = "\t".join(self._create_alias_list(page)))
-                print "[+] Mapped '{domain}' to {ip}".format(domain = page, ip = redirection_ip)
+                print ("[+] Mapped '{domain}' to {ip}".format(domain = page, ip = redirection_ip))
         self.file_handler.write(conf_string)
 
     def setup_spoofing_pages(self):
         if not self.has_http_server():
-            print "[-] No HTTP Server added to DNSSpoofer, cannot setup spoofing"
+            print ("[-] No HTTP Server added to DNSSpoofer, cannot setup spoofing")
             return False
 
         self._cleanup_misconfigured_pages()
@@ -117,7 +117,7 @@ class DNSSpoofer(AirHostPlugin):
 
     def start_spoofing(self, spoof_ip):
         if not self.has_http_server():
-            print "[-] No HTTP Server added to DNSSpoofer, cannot spoof pages"
+            print ("[-] No HTTP Server added to DNSSpoofer, cannot spoof pages")
             return False
 
         self.httpserver.reset_conf()
@@ -137,3 +137,4 @@ class DNSSpoofer(AirHostPlugin):
     def restore(self):
         self.stop_spoofing()
         self.file_handler.restore_file()
+

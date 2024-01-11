@@ -115,7 +115,7 @@ class NetUtils:
                     return (device_name, device_ip)
                 except Exception as e:
                     print e
-                    print "[-] Problem occurred while parsing arp output."
+                    print ("[-] Problem occurred while parsing arp output.")
 
         return (None, None)
 
@@ -160,3 +160,4 @@ class FileHandler(object):
             with open(self.current_file, mode) as filepath:
                 filepath.write(string)
                 filepath.close()
+

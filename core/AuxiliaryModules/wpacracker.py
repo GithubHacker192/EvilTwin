@@ -20,7 +20,7 @@ class WPACracker(object):
     def generate_execution_string(self):
         if  not (self.ssid is not None or self.pcap_file is not None or
                 (self.wordlist_file is not None or self.word_generator_prepend_string is not None)):
-            print "[-] Not enough arguments to start dictionary attack."
+            print ("[-] Not enough arguments to start dictionary attack.")
             return
 
         common_string = "{location}./{name} {ssid_flag} \"{ssid}\" {pcap_flag} \"{pcap_file}\" {wordlist_flag}".format(
@@ -47,6 +47,7 @@ class WPACracker(object):
 
         os.system("chmod +x rcfile.sh")
         if execution_string is not None:
-            print "[+] Called:", execution_string
+            print ("[+] Called:", execution_string)
             call("sudo gnome-terminal -e".split() + [ "./rcfile.sh" ])
         os.system("rm rcfile.sh")
+

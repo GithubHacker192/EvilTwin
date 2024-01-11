@@ -30,3 +30,4 @@ class Reporter(object):
             if not self.is_open():
                 self.open()
             self.log_file.write(line + "\n")
+

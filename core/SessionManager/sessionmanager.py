@@ -67,13 +67,13 @@ class SessionManager(object):
 
         def _load_previous_session(self, date, id):
             self._session_name = self._get_session_name(date, id)
-            print "[+] Loading session '{}'!".format(self._session_name)
+            print ("[+] Loading session '{}'!".format(self._session_name))
             self._session = Session(date, id, self._session_name)
             self._load_info_from_current_session()
 
         def load_session(self, index):
             if index >= len(self._session_list):
-                print "[-] Session index out of bounds!"
+                print ("[-] Session index out of bounds!")
                 return
 
             if self._is_temporary:
@@ -125,15 +125,15 @@ class SessionManager(object):
             if self._date in os.listdir(self._sessions_folder) and \
                len(os.listdir(self._sessions_folder + "/" + self._date)) > 0:
                 # Load previous session
-                print "[+] Found previous session from today. Loading it."
-                print "[+] Loading last session from {}".format(strftime("%d/%m/%Y"))
+                print ("[+] Found previous session from today. Loading it.")
+                print ("[+] Loading last session from {}".format(strftime("%d/%m/%Y")))
                 self._session_id = len(os.listdir(self._sessions_folder + self._date))
                 self._load_previous_session(self._date, self._session_id)
                 return
 
             self._load_all_sessions()
             if len(self._session_list) == 0:
-                print "[-] No previous sessions to load. Creating new One."
+                print ("[-] No previous sessions to load. Creating new One.")
                 answer = "n"
             else:
                 answer = raw_input("[+] Do you want to load an older session? [Y/n]: ")
@@ -144,17 +144,17 @@ class SessionManager(object):
                     try:
                         answer = int(raw_input("[+] Choose a session by index: "))
                         if answer >= len(self._session_list):
-                            print "[-] Index out of bounds."
+                            print ("[-] Index out of bounds.")
                             continue
                         break
                     except:
-                        print "[-] Index must be Integer!"
+                        print ("[-] Index must be Integer!")
                 self._session = self._session_list[answer]
                 self._load_previous_session(self._session.date, self._session.id)
                 return
 
             # Create new session
-            print "[+] Creating new temporary session on {}".format(strftime("%d/%m/%Y"))
+            print ("[+] Creating new temporary session on {}".format(strftime("%d/%m/%Y")))
             self.start_new_session("_".join(raw_input("[+] Enter the desired session name: ").split()))
 
         def _initiate_reporters(self):
@@ -207,3 +207,4 @@ class SessionManager(object):
 
     def __getattr__(self, name):
         return getattr(self.instance, name)
+

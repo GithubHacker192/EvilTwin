@@ -150,7 +150,7 @@ class APLauncher(object):
 
                 elif "wpa" in encryption.lower():
                     if not len(password) >= 8 and "eap" not in auth.lower():
-                        print "[-] Invalid WPA key length: '{}'\nDefaulting to '12346578'".format(password)
+                        print ("[-] Invalid WPA key length: '{}'\nDefaulting to '12346578'".format(password))
                         password = "12345678"
 
                     # Forcing correct configuration so it doesnt come out WPA-WEP or something...
@@ -318,7 +318,7 @@ class APLauncher(object):
         output to a thread which looks for found credentials.
         Another thread is started to monitor the connected client list.
         """
-        print "[+] Starting hostapd background process"
+        print ("[+] Starting hostapd background process")
         self.ap_process = Popen("hostapd-wpe -s {config_path}".format(config_path=self.hostapd_config_path).split(),
                                 stdout=PIPE,
                                 stderr=PIPE,
@@ -340,7 +340,7 @@ class APLauncher(object):
         It sends SIGINT to the background hostapd process and turns off dnsmasq.
         """
         if self.ap_process is not None:
-            print "[+] Killing hostapd background process"
+            print ("[+] Killing hostapd background process")
             self.ap_process.send_signal(9)  # Send SIGINT to process running hostapd
             self.ap_process = None
 
@@ -371,10 +371,10 @@ class APLauncher(object):
                     fail_count += 1
 
                 if fail_count > 5:
-                    print "[-] hostapd was unable to start the access point,"
-                    print "check configuration file or try restarting. Stopping now."
+                    print ("[-] hostapd was unable to start the access point,")
+                    print ("check configuration file or try restarting. Stopping now.")
                     self.stop_access_point(wait = False)
-                    print "stop airhost manually to stop other services"
+                    print ("stop airhost manually to stop other services")
                     break
 
             sleep(3)
@@ -382,7 +382,7 @@ class APLauncher(object):
     def _parse_connected_clients(self, interface):
         try:
             if not pyw.modeget(pyw.getcard(interface)) == 'AP':
-                print "[-] '{}' is not on AP mode".format(interface)
+                print ("[-] '{}' is not on AP mode".format(interface))
                 return False
         except Exception:
             return False
@@ -411,7 +411,7 @@ class APLauncher(object):
                     connected_client_str = "New connected client on '{ssid}'-> ip: {ip}, mac: {mac} ({vendor})"\
                                            .format(ssid=ssid, ip=client_ip, mac=client_mac, vendor=client.vendor)
                     SessionManager().log_event(SuccessfulEvent(connected_client_str))
-                    print "[+]", connected_client_str
+                    print ("[+]", connected_client_str)
             except: pass
 
             temp_clients.append(client)
@@ -450,3 +450,4 @@ class Client(object):
     def __eq__(self, other):
         """Clients are uniquely identified by their MAC address."""
         return (self.mac_address == other.mac_address)
+

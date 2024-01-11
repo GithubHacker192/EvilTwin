@@ -97,7 +97,7 @@ class MinimalWEP(object):
         try:
             self.outgoing_socket = conf.L2socket(iface=self.interface)
         except:
-            print "[-] Error opening socket on '{}'.".format(self.interface)
+            print ("[-] Error opening socket on '{}'.".format(self.interface))
             return
 
         while self.is_up:
@@ -105,7 +105,7 @@ class MinimalWEP(object):
                 self.outgoing_socket.send(beacon_packet)
                 time.sleep(.2)
             except:
-                print "Exception when sending Beacon..."
+                print ("Exception when sending Beacon...")
                 pass
 
     def start(self):
@@ -132,19 +132,19 @@ class MinimalWEP(object):
 
                     if ssid == self.ssid:
                         self.send_probe_response(response_destination)
-                        print "Received probe request, responded with probe response."
+                        print ("Received probe request, responded with probe response.")
 
             elif Dot11Auth in packet:  # Authentication means the client is requesting a challenge
                 self.send_auth_response(response_destination, True)
-                print "Received auth request, responded with WEP challenge."
+                print ("Received auth request, responded with WEP challenge.")
 
             elif Dot11WEP in packet:  # It is the response to the previously sent challenge
                 self.send_auth_response(response_destination, False)
-                print "Received WEP challenge-response packet, responded with success message."
+                print ("Received WEP challenge-response packet, responded with success message.")
 
             elif Dot11AssoReq in packet or Dot11ReassoReq in packet:
                 self.send_asso_response(response_destination, Dot11ReassoReq in packet)
-                print "Received asso request, responded with asso response."
+                print ("Received asso request, responded with asso response.")
 
     def send_probe_response(self, destination):
         probe_response =    radiotap(self.channel) / \
@@ -177,3 +177,4 @@ if __name__ == "main":
         except Exception as e:
             print str(e)
             minwep.shutdown()
+

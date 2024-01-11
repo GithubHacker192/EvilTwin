@@ -50,11 +50,11 @@ class AirHost(object):
         to print out EAP credentials caught by hostapd-wpe.
         """
         SessionManager().log_event(NeutralEvent("Starting AirHost module."))
-        print "[+] Killing already started processes and restarting network services"
+        print ("[+] Killing already started processes and restarting network services")
 
         # Restarting services helps avoiding some conflicts with dnsmasq
         self.stop_access_point(False)
-        print "[+] Running airhost plugins pre_start"
+        print ("[+] Running airhost plugins pre_start")
         for plugin in self.plugins:
             plugin.pre_start()
 
@@ -67,11 +67,11 @@ class AirHost(object):
             return False
 
         self.running_interface = interface
-        print "[+] Running airhost plugins post_start"
+        print ("[+] Running airhost plugins post_start")
         for plugin in self.plugins:
             plugin.post_start()
 
-        print "[+] Access Point launched successfully"
+        print ("[+] Access Point launched successfully")
         SessionManager().log_event(SuccessfulEvent("AirHost module started successfully."))
         return True
 
@@ -82,13 +82,13 @@ class AirHost(object):
             SessionManager().log_event(NeutralEvent("Running pre_stop method for '{}' plugin.".format(plugin)))
             plugin.pre_stop()
 
-        print "[+] Stopping dnsmasq and hostapd services"
+        print ("[+] Stopping dnsmasq and hostapd services")
         self.aplauncher.stop_access_point()
         self.dnsmasqhandler.stop_dnsmasq()
         self.running_interface = None
 
         SessionManager().log_event(NeutralEvent("AirHost module stopped."))
-        print "[+] Access Point stopped..."
+        print ("[+] Access Point stopped...")
 
         for plugin in self.plugins:
             SessionManager().log_event(NeutralEvent("Running post_stop method for '{}' plugin.".format(plugin)))
@@ -100,7 +100,7 @@ class AirHost(object):
                                           "Running restore method for '{}' plugin.".format(plugin)))
                 plugin.restore()
             del self.plugins[:]
-            print "[+] Cleared Airhost plugins"
+            print ("[+] Cleared Airhost plugins")
 
     def is_running(self):
         """Checks if the access point is active."""
@@ -110,3 +110,4 @@ class AirHost(object):
         """Cleanup method for the airhost module."""
         self.dnsmasqhandler.cleanup()
         self.aplauncher.cleanup()
+

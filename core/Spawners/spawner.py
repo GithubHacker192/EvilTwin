@@ -43,6 +43,7 @@ class Spawner(object):
                                                             name=self.name,
                                                             args=self.arg_string).split())
 
-        print "[+] Spawned '{}' with args:\n{}".format(self.calling, self.arg_string)
-        print "[/] NOTE: \nType 'restore {}' to close and restore the spawner.".format(self.name)
-        print "Should type it even if already closed manually."
+        print ("[+] Spawned '{}' with args:\n{}".format(self.calling, self.arg_string))
+        print ("[/] NOTE: \nType 'restore {}' to close and restore the spawner.".format(self.name))
+        print ("Should type it even if already closed manually.")
+

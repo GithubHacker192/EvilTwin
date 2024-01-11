@@ -63,7 +63,7 @@ class DNSMasqHandler(object):
             self.file_handler.write(configurations)
 
     def start_dnsmasq(self):
-        print "[+] Starting dnsmasq service"
+        print ("[+] Starting dnsmasq service")
         if not os.system('service dnsmasq restart') == 0:
             return False
 
@@ -78,3 +78,4 @@ class DNSMasqHandler(object):
     def cleanup(self):
         if self.file_handler is not None:
             self.file_handler.restore_file()
+

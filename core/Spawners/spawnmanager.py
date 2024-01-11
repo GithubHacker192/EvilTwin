@@ -48,10 +48,11 @@ class SpawnManager(object):
                 del spawner
                 return True
 
-        print "[-] Spawner with name '{}' was not called yet.".format(spawner_name)
+        print ("[-] Spawner with name '{}' was not called yet.".format(spawner_name))
         return False
 
     def restore_all(self):
         for spawner in self.spawners:
             spawner.restore_process()
             del spawner
+

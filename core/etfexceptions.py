@@ -27,3 +27,4 @@ class InvalidFilePathException(Exception):
     def __init__(self, message):
         self.error_msg = "[-] Invalid File Path:\n" + message
         Exception.__init__(self, self.error_msg)
+
