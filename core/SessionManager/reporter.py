@@ -31,3 +31,5 @@ class Reporter(object):
                 self.open()
             self.log_file.write(line + "\n")
 
+
+

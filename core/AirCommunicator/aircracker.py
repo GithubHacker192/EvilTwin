@@ -172,3 +172,5 @@ class AirCracker(object):
                                                     .format(self.wep_data_logs[id].ssid)))
         os.system("rm wep_rcfile.sh")
 
+
+

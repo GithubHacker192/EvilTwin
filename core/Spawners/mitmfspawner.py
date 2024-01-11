@@ -6,3 +6,5 @@ class MITMFSpawner(SSLStripSpawner):
         super(MITMFSpawner, self).__init__(config, name)
         self.calling = self.system_location + "/mitmf.py"
 
+
+

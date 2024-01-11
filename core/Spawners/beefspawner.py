@@ -6,3 +6,5 @@ class BeefSpawner(Spawner):
         super(BeefSpawner, self).__init__(config, name)
         self.calling = self.system_location + "/beef"
 
+
+

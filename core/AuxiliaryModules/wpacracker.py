@@ -51,3 +51,5 @@ class WPACracker(object):
             call("sudo gnome-terminal -e".split() + [ "./rcfile.sh" ])
         os.system("rm rcfile.sh")
 
+
+

@@ -50,3 +50,5 @@ def calc_crc32(data):
 
     return crc
 
+
+

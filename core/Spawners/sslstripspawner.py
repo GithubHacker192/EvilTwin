@@ -22,3 +22,5 @@ class SSLStripSpawner(Spawner):
             NetUtils().set_port_redirection_rule("tcp", "443", self.config["tcp_redirection_port"], False)  # Deletes the iptable rule
         super(SSLStripSpawner, self).restore_process()
 
+
+

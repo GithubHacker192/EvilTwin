@@ -320,3 +320,5 @@ class AirScanner(object):
             if probe.ap_ssid:
                 probe.ap_bssids = self.get_bssids_from_ssid(probe.ap_ssid)
 
+
+

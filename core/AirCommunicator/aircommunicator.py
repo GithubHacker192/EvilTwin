@@ -420,3 +420,5 @@ class AirCommunicator(object):
         self.info_printer.add_info(info_key, wep_logs, wep_log_args, wep_log_headers)
         self.info_printer.print_info(info_key, filter_string)
 
+
+

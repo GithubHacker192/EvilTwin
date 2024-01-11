@@ -131,3 +131,5 @@ class SelfishWiFi(AirScannerPlugin):
                                       "Reactive attack on {} vs {}"
                                       .format(parsed_packet.client_mac, parsed_packet.bssid)))
 
+
+

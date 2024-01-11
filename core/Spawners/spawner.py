@@ -47,3 +47,5 @@ class Spawner(object):
         print ("[/] NOTE: \nType 'restore {}' to close and restore the spawner.".format(self.name))
         print ("Should type it even if already closed manually.")
 
+
+

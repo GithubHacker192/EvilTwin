@@ -44,7 +44,7 @@ class AsyncTask(Thread):
     def run(self):
         if self.screen_output:
             for output_line in self.async_exec():
-                print output_line.strip()
+                print (output_line.strip())
                 if self.exit: break
         else:
             self.async_exec()
@@ -114,7 +114,7 @@ class NetUtils:
                     device_ip = device_ip[1:-1] # Cut the enclosing parenthesis off: (0.0.0.0) -> 0.0.0.0
                     return (device_name, device_ip)
                 except Exception as e:
-                    print e
+                    print (e)
                     print ("[-] Problem occurred while parsing arp output.")
 
         return (None, None)
@@ -160,4 +160,6 @@ class FileHandler(object):
             with open(self.current_file, mode) as filepath:
                 filepath.write(string)
                 filepath.close()
+
+
 

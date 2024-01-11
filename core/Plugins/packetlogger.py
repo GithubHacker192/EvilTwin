@@ -77,3 +77,5 @@ class PacketLogger(AirScannerPlugin):
     def handle_packet(self, packet):
         self.log(packet, self.or_filter)
 
+
+

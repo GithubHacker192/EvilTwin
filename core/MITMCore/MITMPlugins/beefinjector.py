@@ -20,3 +20,5 @@ class BeEFInjector(MITMPlugin):
             flow.response.content = str(html)
             print ("[{}] Injected BeFF url hook in page '{}'...".format(self.name, flow.request.url))
 
+
+

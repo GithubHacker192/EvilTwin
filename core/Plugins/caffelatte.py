@@ -180,3 +180,5 @@ class CaffeLatte(AirScannerPlugin, AirInjectorPlugin):
         if self.replay_attack_thread is not None:
             self.replay_attack_thread.join()
 
+
+

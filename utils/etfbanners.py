@@ -58,3 +58,5 @@ banner4 = """
 def get_banner():
     banners = [banner1, banner2, banner3, banner4]
     return random.choice(banners)
+
+

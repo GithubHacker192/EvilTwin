@@ -451,3 +451,5 @@ class Client(object):
         """Clients are uniquely identified by their MAC address."""
         return (self.mac_address == other.mac_address)
 
+
+

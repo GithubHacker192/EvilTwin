@@ -90,3 +90,5 @@ class Deauthenticator(AirInjectorPlugin):
             SessionManager().log_event(UnsuccessfulEvent("Deauthentication attack crashed with error: {}"
                                                         .format(str(e))))
 
+
+
